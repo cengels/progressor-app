@@ -15,12 +15,12 @@ public class ProgressListViewModel extends ViewModel {
         ProgressItem progressItem1 = new ProgressItem();
         progressItem1.setLabel("Book 1");
         progressItem1.setValue(new UnitValue(50000, "words"));
-        progressItem1.setValue(new UnitValue(120000, "words"));
+        progressItem1.setMaxValue(new UnitValue(120000, "words"));
 
         ProgressItem progressItem2 = new ProgressItem();
         progressItem2.setLabel("Time spent running today");
         progressItem2.setValue(new UnitValue(10, Unit.MINUTES));
-        progressItem2.setValue(new UnitValue(60, Unit.MINUTES));
+        progressItem2.setMaxValue(new UnitValue(60, Unit.MINUTES));
 
         this.progressItems.add(progressItem1);
         this.progressItems.add(progressItem2);

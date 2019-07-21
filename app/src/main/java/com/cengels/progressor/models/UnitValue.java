@@ -122,6 +122,10 @@ public class UnitValue implements Serializable {
 
     @Override
     public String toString() {
-        return String.format(this.decimals == 0 ? "%d" : "%." + this.decimals + "f", this.value) + " " + this.unitSuffix;
+        if (this.decimals == 0) {
+            return (long)this.value + " " + this.unitSuffix;
+        } else {
+            return String.format("%." + this.decimals + "f", this.value) + " " + this.unitSuffix;
+        }
     }
 }

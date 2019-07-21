@@ -1,7 +1,6 @@
 package com.cengels.progressor.models;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.cengels.progressor.enums.ProgressType;
 
 public class ProgressItem {
@@ -10,7 +9,7 @@ public class ProgressItem {
     private String label = "";
     @NonNull
     private UnitValue value;
-    @Nullable
+    @NonNull
     private UnitValue maxValue;
 
     public ProgressType getType() {
@@ -43,12 +42,16 @@ public class ProgressItem {
         this.value = value;
     }
 
-    @Nullable
+    @NonNull
     public UnitValue getMaxValue() {
-        return maxValue;
+        return this.maxValue;
     }
 
-    public void setMaxValue(@Nullable UnitValue maxValue) {
+    public void setMaxValue(@NonNull UnitValue maxValue) {
         this.maxValue = maxValue;
+    }
+
+    public int getProgress() {
+        return (int) Math.round(this.value.get() / this.maxValue.get() * 100);
     }
 }

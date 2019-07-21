@@ -3,6 +3,7 @@ package com.cengels.progressor.fragments;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,17 +34,15 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = items.get(position);
-        holder.idView.setText(String.valueOf(items.get(position).getId()));
-        holder.contentView.setText(items.get(position).getLabel());
+        holder.labelView.setText(holder.item.getLabel());
+        holder.progressBar.setProgress(holder.item.getProgress());
+        holder.maxValueView.setText(holder.item.getMaxValue().toString());
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != listener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    listener.onListFragmentInteraction(holder.item);
-                }
+        holder.view.setOnClickListener(v -> {
+            if (listener != null) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                listener.onListFragmentInteraction(holder.item);
             }
         });
     }
@@ -55,20 +54,22 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
-        public final TextView idView;
-        public final TextView contentView;
+        public final TextView labelView;
+        public final ProgressBar progressBar;
+        public final TextView maxValueView;
         public ProgressItem item;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            this.idView = view.findViewById(R.id.item_number);
-            this.contentView = view.findViewById(R.id.content);
+            this.labelView = view.findViewById(R.id.item_label);
+            this.progressBar = view.findViewById(R.id.progress_bar);
+            this.maxValueView = view.findViewById(R.id.max_value);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + this.contentView.getText() + "'";
+            return super.toString() + " '" + this.progressBar.getProgress() + "'";
         }
     }
 }
