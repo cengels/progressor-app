@@ -3,13 +3,21 @@ package com.cengels.progressor.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import com.cengels.progressor.R;
-import com.cengels.progressor.fragments.BlankFragment;
-import com.cengels.progressor.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +26,22 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, BlankFragment.newInstance())
-                .addToBackStack("main")
-                .commit();
+        this.navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        this.appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(this, this.navController, this.appBarConfiguration);
+
+        this.navController.addOnDestinationChangedListener((@NonNull NavController controller,
+             @NonNull NavDestination destination, @Nullable Bundle arguments) -> {
+            MenuItem settingsIcon = toolbar.getMenu().findItem(R.id.settings_fragment);
+
+            if (settingsIcon != null) {
+                if (destination.getId() == R.id.blank_fragment) {
+                    settingsIcon.setVisible(true);
+                } else {
+                    settingsIcon.setVisible(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -34,21 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+//        if (item.getItemId() == R.id.settings_fragment) {
+//            this.navController.navigate(R.id.action_global_settingsFragment);
+//            return true;
+//        }
 
-        if (id == R.id.action_settings) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, SettingsFragment.newInstance())
-                    .addToBackStack("settings")
-                    .commit();
+        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+    }
 
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(this.navController, this.appBarConfiguration);
     }
 }
