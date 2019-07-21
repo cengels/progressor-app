@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/blank_fragment">
+            app:startDestination="@id/progress_item_list">
 
     <fragment
-            android:id="@+id/blank_fragment"
-            android:name="com.cengels.progressor.fragments.BlankFragment"
-            android:label="Home"/>
+            android:id="@+id/progress_item_list"
+            android:name="com.cengels.progressor.fragments.ProgressListFragment"
+            android:label="Progressor"/>
     <fragment
             android:id="@+id/settings_fragment"
             android:name="com.cengels.progressor.fragments.SettingsFragment"

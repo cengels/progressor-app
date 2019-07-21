@@ -3,7 +3,6 @@ package com.cengels.progressor.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +13,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.cengels.progressor.R;
+import com.cengels.progressor.fragments.ProgressListFragment;
+import com.cengels.progressor.fragments.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProgressListFragment.OnListFragmentInteractionListener {
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             MenuItem settingsIcon = toolbar.getMenu().findItem(R.id.settings_fragment);
 
             if (settingsIcon != null) {
-                if (destination.getId() == R.id.blank_fragment) {
+                if (destination.getId() == R.id.progress_item_list) {
                     settingsIcon.setVisible(true);
                 } else {
                     settingsIcon.setVisible(false);
@@ -53,16 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.settings_fragment) {
-//            this.navController.navigate(R.id.action_global_settingsFragment);
-//            return true;
-//        }
-
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(this.navController, this.appBarConfiguration);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }
