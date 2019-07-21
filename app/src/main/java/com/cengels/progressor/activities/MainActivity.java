@@ -14,7 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.cengels.progressor.R;
 import com.cengels.progressor.fragments.ProgressListFragment;
-import com.cengels.progressor.fragments.dummy.DummyContent;
+import com.cengels.progressor.models.ProgressItem;
 
 public class MainActivity extends AppCompatActivity implements ProgressListFragment.OnListFragmentInteractionListener {
     private NavController navController;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements ProgressListFragm
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(ProgressItem item) {
 
     }
 }

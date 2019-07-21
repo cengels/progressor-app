@@ -1,24 +1,23 @@
 package com.cengels.progressor.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.cengels.progressor.R;
 import com.cengels.progressor.fragments.ProgressListFragment.OnListFragmentInteractionListener;
-import com.cengels.progressor.fragments.dummy.DummyContent.DummyItem;
+import com.cengels.progressor.models.ProgressItem;
 
 import java.util.List;
 
 public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<ProgressItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> items;
+    private final List<ProgressItem> items;
     private final OnListFragmentInteractionListener listener;
 
-    public ProgressItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ProgressItemRecyclerViewAdapter(List<ProgressItem> items, OnListFragmentInteractionListener listener) {
         this.items = items;
         this.listener = listener;
     }
@@ -34,8 +33,8 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = items.get(position);
-        holder.idView.setText(items.get(position).id);
-        holder.contentView.setText(items.get(position).content);
+        holder.idView.setText(String.valueOf(items.get(position).getId()));
+        holder.contentView.setText(items.get(position).getLabel());
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +57,7 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
         public final View view;
         public final TextView idView;
         public final TextView contentView;
-        public DummyItem item;
+        public ProgressItem item;
 
         public ViewHolder(View view) {
             super(view);
