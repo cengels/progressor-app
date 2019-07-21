@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+            app:key="personalization_category"
+            app:title="@string/setting_category_personalization">
+        <SwitchPreferenceCompat
+                app:key="dark_mode"
+                app:title="@string/setting_dark_mode"
+                app:summary="@string/setting_dark_mode_summary"
+                app:icon="@drawable/ic_dark_mode"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            app:key="help_category"
+            app:title="@string/setting_category_help">
+        <Preference
+                app:key="feedback"
+                app:title="@string/setting_feedback"
+                app:summary="@string/setting_feedback_summary"
+                app:icon="@drawable/ic_feedback"/>
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
