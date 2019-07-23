@@ -36,7 +36,7 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
         holder.item = items.get(position);
         holder.labelView.setText(holder.item.getLabel());
         holder.progressBar.setProgress(holder.item.getProgress());
-        holder.maxValueView.setText(holder.item.getMaxValue().toString());
+        holder.maxValueView.setText(holder.item.getGoal().toString());
 
         holder.view.setOnClickListener(v -> {
             if (listener != null) {

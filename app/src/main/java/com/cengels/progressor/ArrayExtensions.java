@@ -1,5 +1,7 @@
 package com.cengels.progressor;
 
+import androidx.annotation.NonNull;
+
 public abstract class ArrayExtensions {
     /**
      * Checks whether the specified array contains the specified element.
