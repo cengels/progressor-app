@@ -13,12 +13,12 @@ public class ProgressListViewModel extends ViewModel {
 
     public ProgressListViewModel() {
         ProgressItem progressItem1 = new ProgressItem();
-        progressItem1.setLabel("Book 1");
+        progressItem1.setLabel("written on Book 1");
         progressItem1.setValue(new UnitValue(50000, "words"));
         progressItem1.setGoal(new UnitValue(120000, "words"));
 
         ProgressItem progressItem2 = new ProgressItem();
-        progressItem2.setLabel("Time spent running today");
+        progressItem2.setLabel("spent running today");
         progressItem2.setValue(new UnitValue(10 * 60, ProgressType.TIME));
         progressItem2.setGoal(new UnitValue(60 * 60, ProgressType.TIME));
 

@@ -34,9 +34,10 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = items.get(position);
-        holder.labelView.setText(holder.item.getLabel());
+        holder.valueView.setText(holder.item.getValue().getFormattedValue());
+        holder.labelView.setText(holder.item.getUnitLabel());
         holder.progressBar.setProgress(holder.item.getProgress());
-        holder.maxValueView.setText(holder.item.getGoal().toString());
+        holder.maxValueView.setText(holder.item.getGoal().getFormattedValue(holder.item.getValue().getBestUnit()));
 
         holder.view.setOnClickListener(v -> {
             if (listener != null) {
@@ -54,6 +55,7 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
+        public final TextView valueView;
         public final TextView labelView;
         public final ProgressBar progressBar;
         public final TextView maxValueView;
@@ -62,6 +64,7 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
         public ViewHolder(View view) {
             super(view);
             this.view = view;
+            this.valueView = view.findViewById(R.id.item_value);
             this.labelView = view.findViewById(R.id.item_label);
             this.progressBar = view.findViewById(R.id.progress_bar);
             this.maxValueView = view.findViewById(R.id.max_value);

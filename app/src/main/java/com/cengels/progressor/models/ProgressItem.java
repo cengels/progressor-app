@@ -35,6 +35,11 @@ public class ProgressItem {
     }
 
     @NonNull
+    public String getUnitLabel() {
+        return this.getValue().getBestUnit() + " " + label;
+    }
+
+    @NonNull
     public UnitValue getValue() {
         return this.value;
     }

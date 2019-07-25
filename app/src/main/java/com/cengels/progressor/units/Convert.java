@@ -58,8 +58,10 @@ public class Convert {
 
         // TODO: Double-check this. Or write tests. That's a nice thought. Tests!
         while ((index < units.length - 1 && value < 1 && Unit.conversionTable.containsKey(units[index + 1]))
-                || (index > 0 && value >= Unit.conversionTable.get(unit))) {
+                || (index >= 0 && value >= Unit.conversionTable.get(unit))) {
             if (value < 1) {
+                // This is a remnant from early code. Since UnitValues always use the smallest value as their
+                // internal value, this branch should never be entered.
                 value *= Unit.conversionTable.get(units[index + 1]);
                 index--;
                 unit = units[index];
@@ -98,10 +100,12 @@ public class Convert {
         double value = this.value;
 
         if (index < indexTarget) {
-            for (int i = index; i <= indexTarget; i++) {
+            for (int i = index; i < indexTarget; i++) {
                 value /= Unit.conversionTable.get(units[i]);
             }
         } else {
+            // This is a remnant from early code. Since UnitValues always use the smallest value as their
+            // internal value, this branch should never be entered.
             for (int i = index; i >= indexTarget; i--) {
                 value *= Unit.conversionTable.get(units[i - 1]);
             }

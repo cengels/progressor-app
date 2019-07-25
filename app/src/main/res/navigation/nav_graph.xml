@@ -14,5 +14,5 @@
             android:label="Settings"/>
     <action
             android:id="@+id/action_global_settingsFragment"
-            app:destination="@id/settings_fragment"/>
+            app:destination="@id/settings_fragment" />
 </navigation>

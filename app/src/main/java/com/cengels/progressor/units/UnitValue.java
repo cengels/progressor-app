@@ -57,6 +57,26 @@ public class UnitValue implements Serializable {
         return this.decimals;
     }
 
+    public String getUnit() {
+        return this.unit;
+    }
+
+    public String getBestUnit() {
+        if (this.type == ProgressType.CUSTOM) {
+            return this.unit;
+        }
+
+        return Convert.from(this.getUnit()).value(this.value).bestUnit();
+    }
+
+    public double getBest() {
+        if (this.type == ProgressType.CUSTOM) {
+            return this.value;
+        }
+
+        return Convert.from(this.getUnit()).value(this.value).best();
+    }
+
     private void inferDecimals() {
         switch (this.type) {
             case COUNT:
@@ -73,34 +93,32 @@ public class UnitValue implements Serializable {
         }
     }
 
-    public String getUnit() {
-        return this.unit;
+    public String getFormattedValue() {
+        double value = this.getBest();
+
+        if (this.decimals == 0) {
+            return String.valueOf((long)value);
+        } else {
+            return String.format("%." + this.decimals + "f", value);
+        }
     }
 
-    public String getBestUnit() {
-        return Convert.from(this.getUnit()).value(this.value).bestUnit();
-    }
+    public String getFormattedValue(@NonNull String unit) {
+        double value = Convert.from(this.unit).value(this.value).to(unit);
 
-    public double getBest() {
-        return Convert.from(this.getUnit()).value(this.value).best();
+        if (this.decimals == 0) {
+            return String.valueOf((long)value);
+        } else {
+            return String.format("%." + this.decimals + "f", value);
+        }
     }
 
     @Override
     public String toString() {
-        double value = this.getBest();
-        if (this.decimals == 0) {
-            return (long)value + " " + this.unit;
-        } else {
-            return String.format("%." + this.decimals + "f", value) + " " + this.unit;
-        }
+        return this.getFormattedValue() + " " + this.unit;
     }
 
     public String toString(@NonNull String unit) {
-        double value = Convert.from(this.unit).value(this.value).to(unit);
-        if (this.decimals == 0) {
-            return (long)value + " " + this.unit;
-        } else {
-            return String.format("%." + this.decimals + "f", value) + " " + this.unit;
-        }
+        return this.getFormattedValue(unit) + " " + this.unit;
     }
 }

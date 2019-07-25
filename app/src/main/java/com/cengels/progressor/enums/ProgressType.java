@@ -18,7 +18,7 @@ public enum ProgressType {
     LIQUID,
     @UnitDescriptor({Unit.CALORIES, Unit.KILOCALORIES})
     CALORIES,
-    @UnitDescriptor({Unit.SECONDS, Unit.MINUTES, Unit.HOURS})
+    @UnitDescriptor({Unit.SECONDS, Unit.MINUTES, Unit.HOURS, Unit.DAYS})
     TIME,
     @UnitDescriptor({Unit.DAYS, Unit.MONTHS, Unit.YEARS})
     DAYS,

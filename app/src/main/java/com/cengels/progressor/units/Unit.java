@@ -39,6 +39,9 @@ public abstract class Unit {
         conversionTable.put(Unit.CENTIMETERS, 100);
         conversionTable.put(Unit.MILLIMETERS, 10);
         conversionTable.put(Unit.CALORIES, 1000);
+        conversionTable.put(Unit.HOURS, 24);
+        conversionTable.put(Unit.MINUTES, 60);
+        conversionTable.put(Unit.SECONDS, 60);
     }
 
     @Nullable
