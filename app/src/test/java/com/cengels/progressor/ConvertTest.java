@@ -30,15 +30,15 @@ public class ConvertTest {
 
     @Test
     public void standardConversion_sameUnitShouldReturnInput() {
-        assertThat(Convert.from(500, Unit.KILOGRAMS).to(Unit.KILOGRAMS)).isEqualTo(500.0);
-        assertThat(Convert.from(20, Unit.LITERS).to(Unit.LITERS)).isEqualTo(20.0);
-        assertThat(Convert.from(5, Unit.NONE).to(Unit.NONE)).isEqualTo(5.0);
+        assertThat(Convert.from(500, Unit.KILOGRAMS).to(Unit.KILOGRAMS).get()).isEqualTo(500.0);
+        assertThat(Convert.from(20, Unit.LITERS).to(Unit.LITERS).get()).isEqualTo(20.0);
+        assertThat(Convert.from(5, Unit.NONE).to(Unit.NONE).get()).isEqualTo(5.0);
     }
 
     @ParameterizedTest
     @MethodSource("smallerToLargerParameters")
     public void standardConversion_largerUnitShouldReturnSmallerValue(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).to(target.getUnit());
+        double actual = Convert.from(source).to(target.getUnit()).get();
         double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
@@ -46,7 +46,7 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("largerToSmallerParameters")
     public void standardConversion_smallerUnitShouldReturnLargerValue(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).to(target.getUnit());
+        double actual = Convert.from(source).to(target.getUnit()).get();
         double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
@@ -54,14 +54,14 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("bestParametersSmallToLarge")
     public void bestConversion_shouldGetLastUnitWithValueOver1(final UnitValue source, final UnitValue target) {
-        final String actual = Convert.from(source).bestUnit();
+        final String actual = Convert.from(source).best().getUnit();
         assertThat(actual).as("%s to %s", source.getUnit(), target.getUnit()).isEqualTo(target.getUnit());
     }
 
     @ParameterizedTest
     @MethodSource("bestParametersSmallToLarge")
     public void bestConversion_shouldGetLastUnitValueWithValueOver1(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).best();
+        double actual = Convert.from(source).best().get();
         double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
@@ -69,22 +69,22 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("bestParametersLargeToSmall")
     public void bestConversion_shouldGetFirstUnitWithValueOver1(final UnitValue source, final UnitValue target) {
-        final String actual = Convert.from(source).bestUnit();
+        final String actual = Convert.from(source).best().getUnit();
         assertThat(actual).as("%s to %s", source.getUnit(), target.getUnit()).isEqualTo(target.getUnit());
     }
 
     @ParameterizedTest
     @MethodSource("bestParametersLargeToSmall")
     public void bestConversion_shouldGetFirstUnitValueWithValueOver1(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).best();
+        double actual = Convert.from(source).best().get();
         double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
 
     @Test
     public void bestConversion_invalidUnitShouldReturnInput() {
-        assertThat(Convert.from(new UnitValue(500.0, Unit.NONE)).bestUnit()).isEmpty();
-        assertThat(Convert.from(new UnitValue(500.0, "test")).bestUnit()).isEqualTo("test");
+        assertThat(Convert.from(new UnitValue(500.0, Unit.NONE)).best().getUnit()).isEmpty();
+        assertThat(Convert.from(new UnitValue(500.0, "test")).best().getUnit()).isEqualTo("test");
     }
 
     @Test

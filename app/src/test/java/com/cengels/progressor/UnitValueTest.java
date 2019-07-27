@@ -105,9 +105,11 @@ public class UnitValueTest {
                 Arguments.of(new UnitValue(5050, Unit.CENTIMETERS), "50.50m"),
                 Arguments.of(new UnitValue(4222, Unit.NONE), "4222"),
                 Arguments.of(new UnitValue(42.53, Unit.PERCENT), "42.5%"),
-                Arguments.of(new UnitValue(4222, "tst"), "4222.00 tst"),
-                Arguments.of(new UnitValue(4222, "tst", 5), "4222.00000tst"),
-                Arguments.of(new UnitValue(4222, "tst", 0), "4222tst")
+                Arguments.of(new UnitValue(4222, "tst"), "4222tst"),
+                Arguments.of(new UnitValue(4222, "tst", 5), "4222tst"),
+                Arguments.of(new UnitValue(4222, "tst", 0), "4222tst"),
+                Arguments.of(new UnitValue(4222.5, "tst"), "4222.50tst"),
+                Arguments.of(new UnitValue(4222.5, "tst", 5), "4222.50000tst")
         );
     }
 }

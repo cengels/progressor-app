@@ -85,12 +85,12 @@ public class UnitValue implements Serializable {
             return this.unit;
         }
 
-        return Convert.from(this).bestUnit();
+        return Convert.from(this).best().getUnit();
     }
 
-    public double getBest() {
+    public UnitValue getBest() {
         if (this.type == ProgressType.CUSTOM) {
-            return this.value;
+            return this;
         }
 
         return Convert.from(this).best();
@@ -112,7 +112,7 @@ public class UnitValue implements Serializable {
     }
 
     public String getFormattedValue() {
-        double value = this.getBest();
+        double value = this.getBest().get();
 
         if (this.decimals == 0 || (long)value == value) {
             return String.valueOf((long)value);
@@ -122,18 +122,19 @@ public class UnitValue implements Serializable {
     }
 
     public String getFormattedValue(@NonNull String unit) {
-        double value = Convert.from(this).to(unit);
+        UnitValue value = Convert.from(this).to(unit);
 
         if (this.decimals == 0) {
-            return String.valueOf((long)value);
+            return String.valueOf((long)value.get());
         }
 
-        return String.format("%." + this.decimals + "f", value);
+        return String.format("%." + this.decimals + "f", value.get());
     }
 
     @Override
     public String toString() {
-        return this.getFormattedValue() + this.unit;
+        final UnitValue best = this.getBest();
+        return best.getFormattedValue() + best.getUnit();
     }
 
     public String toString(@NonNull String unit) {

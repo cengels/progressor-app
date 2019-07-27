@@ -48,38 +48,9 @@ public class Convert {
         return this.value;
     }
 
-    @NonNull
-    public String bestUnit() {
-        if (this.getUnits() == null) {
-            return this.value.getUnit();
-        }
-
-        final String[] units = this.getUnits();
-
-        int index = ArrayExtensions.indexOf(units, this.value.getUnit());
-
-        double value = this.value.get();
-        String unit = this.value.getUnit();
-
-        while ((index <= units.length - 1 && value < 1 && Unit.conversionTable.containsKey(units[index - 1]))
-                || (index >= 0 && Unit.conversionTable.containsKey(unit) && value >= Unit.conversionTable.get(unit))) {
-            if (value < 1) {
-                value *= Unit.conversionTable.get(units[index - 1]);
-                index--;
-                unit = units[index];
-            } else {
-                value /= Unit.conversionTable.get(unit);
-                index++;
-                unit = units[index];
-            }
-        }
-
-        return unit;
-    }
-
-    public double to(@NonNull String toUnit) {
+    public UnitValue to(@NonNull String toUnit) {
         if (this.value.getUnit().equals(toUnit)) {
-            return this.value.get();
+            return this.value;
         }
 
         if (this.getUnits() == null) {
@@ -107,12 +78,34 @@ public class Convert {
             }
         }
 
-        return value;
+        return new UnitValue(value, toUnit);
     }
 
-    public double best() {
-        final String bestUnit = this.bestUnit();
+    public UnitValue best() {
+        if (this.getUnits() == null) {
+            return this.value;
+        }
 
-        return this.to(bestUnit);
+        final String[] units = this.getUnits();
+
+        int index = ArrayExtensions.indexOf(units, this.value.getUnit());
+
+        double value = this.value.get();
+        String unit = this.value.getUnit();
+
+        while ((index <= units.length - 1 && value < 1 && Unit.conversionTable.containsKey(units[index - 1]))
+                || (index >= 0 && Unit.conversionTable.containsKey(unit) && value >= Unit.conversionTable.get(unit))) {
+            if (value < 1) {
+                value *= Unit.conversionTable.get(units[index - 1]);
+                index--;
+                unit = units[index];
+            } else {
+                value /= Unit.conversionTable.get(unit);
+                index++;
+                unit = units[index];
+            }
+        }
+
+        return new UnitValue(value, unit);
     }
 }
