@@ -28,7 +28,9 @@ android {
     }
 }
 
-// androidx.test has a dependency to JUnit 4 and hamcrest. However, I use JUnit 5 and Google Truth.
+// androidx.test has a dependency to JUnit 4 and hamcrest, rendered redundant by JUnit 5 and JAssert.
+// Interestingly, Google Truth also depends on JUnit 4 and hamcrest even though the very idea of an assertion framework
+// is that it should be testing framework–independent.
 configurations.all {
     exclude group: 'junit'
     exclude group: 'org.hamcrest'
