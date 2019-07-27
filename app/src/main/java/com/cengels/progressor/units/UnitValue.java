@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import com.cengels.progressor.enums.ProgressType;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 
 public class UnitValue implements Serializable {
@@ -112,17 +113,26 @@ public class UnitValue implements Serializable {
     }
 
     public String getFormattedValue() {
-        double value = this.getBest().get();
+        final UnitValue value = this.getBest();
 
-        if (this.decimals == 0 || (long)value == value) {
-            return String.valueOf((long)value);
+        switch (value.getUnit()) {
+            case Unit.SECONDS:
+                return String.format("0:%02d", (long)value.get());
+            case Unit.MINUTES:
+                return String.format("%d:%02d", (long)value.get(), (long)(value.get() * 60 % 60));
+            case Unit.HOURS:
+                return String.format("%d:%02d:%02d", (long)value.get(), (long)(value.get() * 60 % 60), (long)(value.get() * 60 * 60 % 60));
         }
 
-        return String.format("%." + this.decimals + "f", value);
+        if (value.decimals == 0 || (long)value.get() == value.get()) {
+            return String.valueOf((long)value.get());
+        }
+
+        return String.format("%." + this.decimals + "f", value.get());
     }
 
     public String getFormattedValue(@NonNull String unit) {
-        UnitValue value = Convert.from(this).to(unit);
+        final UnitValue value = Convert.from(this).to(unit);
 
         if (this.decimals == 0) {
             return String.valueOf((long)value.get());
@@ -134,10 +144,25 @@ public class UnitValue implements Serializable {
     @Override
     public String toString() {
         final UnitValue best = this.getBest();
+
+        switch (best.getUnit()) {
+            case Unit.SECONDS:
+            case Unit.MINUTES:
+            case Unit.HOURS:
+                return best.getFormattedValue();
+        }
+
         return best.getFormattedValue() + best.getUnit();
     }
 
     public String toString(@NonNull String unit) {
+        switch (unit) {
+            case Unit.SECONDS:
+            case Unit.MINUTES:
+            case Unit.HOURS:
+                return this.getFormattedValue(unit);
+        }
+
         return this.getFormattedValue(unit) + unit;
     }
 

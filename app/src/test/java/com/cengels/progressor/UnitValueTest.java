@@ -49,17 +49,19 @@ public class UnitValueTest {
         assertThat(value.toString()).isEqualTo(formattedValue);
     }
 
-//    @ParameterizedTest
-//    @MethodSource
-//    public void stringify_time(final UnitValue value, final String formattedValue) {
-//        assertThat(value.toString()).isEqualTo(formattedValue);
-//    }
-//
-//    private static Stream stringify_time() {
-//        return Stream.of(
-//                Arguments.of(new UnitValue(5000, Unit.CENTIMETERS), "50m")
-//        );
-//    }
+    @ParameterizedTest
+    @MethodSource
+    public void stringify_time(final UnitValue value, final String formattedValue) {
+        assertThat(value.toString()).isEqualTo(formattedValue);
+    }
+
+    private static Stream stringify_time() {
+        return Stream.of(
+                Arguments.of(new UnitValue(530, Unit.SECONDS), "8:50"),
+                Arguments.of(new UnitValue(3800, Unit.SECONDS), "1:03:20"),
+                Arguments.of(new UnitValue(133, Unit.MINUTES), "2:13:00")
+        );
+    }
 
     private static Stream constructor_ProgressType() {
         return Stream.of(
