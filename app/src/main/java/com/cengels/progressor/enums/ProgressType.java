@@ -11,16 +11,14 @@ public enum ProgressType {
     @UnitDescriptor({Unit.GRAMS, Unit.KILOGRAMS, Unit.TONS})
     WEIGHT,
     @UnitDescriptor({Unit.MILLIMETERS, Unit.CENTIMETERS, Unit.METERS, Unit.KILOMETERS})
-    HEIGHT,
-    @UnitDescriptor({Unit.MILLIMETERS, Unit.CENTIMETERS, Unit.METERS, Unit.KILOMETERS})
     DISTANCE,
+    @UnitDescriptor({Unit.MILLIMETERS, Unit.CENTIMETERS, Unit.METERS, Unit.KILOMETERS})
+    HEIGHT,
     @UnitDescriptor({Unit.MILLILITERS, Unit.LITERS})
     LIQUID,
     @UnitDescriptor({Unit.CALORIES, Unit.KILOCALORIES})
     CALORIES,
-    @UnitDescriptor({Unit.SECONDS, Unit.MINUTES, Unit.HOURS, Unit.DAYS})
+    @UnitDescriptor({Unit.SECONDS, Unit.MINUTES, Unit.HOURS, Unit.DAYS, Unit.WEEKS, Unit.MONTHS, Unit.YEARS})
     TIME,
-    @UnitDescriptor({Unit.DAYS, Unit.MONTHS, Unit.YEARS})
-    DAYS,
     CUSTOM
 }

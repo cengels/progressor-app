@@ -4,29 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.cengels.progressor.ArrayExtensions;
 import com.cengels.progressor.enums.ProgressType;
+import com.cengels.progressor.exceptions.IllegalConversionException;
+
+import java.util.IllegalFormatConversionException;
 
 public class Convert {
-    private final String fromUnit;
+    @NonNull
+    private final UnitValue value;
+    @Nullable
     private String[] units;
     private boolean checked = false;
-    private double value = Double.MIN_VALUE;
 
-    private Convert(@NonNull String fromUnit) {
-        this.fromUnit = fromUnit;
+    private Convert(@NonNull UnitValue unitValue) {
+        this.value = unitValue;
     }
 
-    public static Convert from(@NonNull String fromUnit) {
-        return new Convert(fromUnit);
+    @NonNull
+    public static Convert from(double value, @NonNull String fromUnit) {
+        return new Convert(new UnitValue(value, fromUnit));
     }
 
-    public Convert value(double value) {
-        this.value = value;
-
-        return this;
+    @NonNull
+    public static Convert from(@NonNull UnitValue unitValue) {
+        return new Convert(unitValue);
     }
 
     private ProgressType getProgressType() {
-        return Unit.getProgressType(this.fromUnit);
+        return Unit.getProgressType(this.value.getUnit());
     }
 
     @Nullable
@@ -39,30 +43,28 @@ public class Convert {
         return this.units;
     }
 
-    @Nullable
+    @NonNull
+    public UnitValue getValue() {
+        return this.value;
+    }
+
+    @NonNull
     public String bestUnit() {
-        if (!Unit.conversionTable.containsKey(this.fromUnit) || this.getUnits() == null) {
-            return null;
+        if (this.getUnits() == null) {
+            return this.value.getUnit();
         }
 
         final String[] units = this.getUnits();
 
-        int index = ArrayExtensions.indexOf(units, this.fromUnit);
+        int index = ArrayExtensions.indexOf(units, this.value.getUnit());
 
-        if (index == -1) {
-            throw new IllegalArgumentException("The passed units array does not contain this object's unitSuffix.");
-        }
+        double value = this.value.get();
+        String unit = this.value.getUnit();
 
-        double value = this.value;
-        String unit = this.fromUnit;
-
-        // TODO: Double-check this. Or write tests. That's a nice thought. Tests!
-        while ((index < units.length - 1 && value < 1 && Unit.conversionTable.containsKey(units[index + 1]))
-                || (index >= 0 && value >= Unit.conversionTable.get(unit))) {
+        while ((index <= units.length - 1 && value < 1 && Unit.conversionTable.containsKey(units[index - 1]))
+                || (index >= 0 && Unit.conversionTable.containsKey(unit) && value >= Unit.conversionTable.get(unit))) {
             if (value < 1) {
-                // This is a remnant from early code. Since UnitValues always use the smallest value as their
-                // internal value, this branch should never be entered.
-                value *= Unit.conversionTable.get(units[index + 1]);
+                value *= Unit.conversionTable.get(units[index - 1]);
                 index--;
                 unit = units[index];
             } else {
@@ -76,37 +78,31 @@ public class Convert {
     }
 
     public double to(@NonNull String toUnit) {
-        if (this.value == Double.MIN_VALUE) {
-            throw new RuntimeException("Value wasn't specified. Did you forget to call value()?");
+        if (this.value.getUnit().equals(toUnit)) {
+            return this.value.get();
         }
 
-        if (this.fromUnit.equals(toUnit)) {
-            return this.value;
-        }
-
-        if (!Unit.conversionTable.containsKey(this.fromUnit) || this.getUnits() == null) {
-            return this.value;
+        if (this.getUnits() == null) {
+            throw new IllegalConversionException(this.value.getUnit(), toUnit);
         }
 
         final String[] units = this.getUnits();
 
-        int index = ArrayExtensions.indexOf(units, this.fromUnit);
+        int index = ArrayExtensions.indexOf(units, this.value.getUnit());
         final int indexTarget = ArrayExtensions.indexOf(units, toUnit);
 
         if (index == -1 || indexTarget == -1) {
-            throw new IllegalArgumentException("Index not found.");
+            throw new IllegalConversionException(this.value.getUnit(), toUnit);
         }
 
-        double value = this.value;
+        double value = this.value.get();
 
         if (index < indexTarget) {
             for (int i = index; i < indexTarget; i++) {
                 value /= Unit.conversionTable.get(units[i]);
             }
         } else {
-            // This is a remnant from early code. Since UnitValues always use the smallest value as their
-            // internal value, this branch should never be entered.
-            for (int i = index; i >= indexTarget; i--) {
+            for (int i = index; i > indexTarget; i--) {
                 value *= Unit.conversionTable.get(units[i - 1]);
             }
         }
@@ -116,10 +112,6 @@ public class Convert {
 
     public double best() {
         final String bestUnit = this.bestUnit();
-
-        if (bestUnit == null) {
-            return this.value;
-        }
 
         return this.to(bestUnit);
     }
