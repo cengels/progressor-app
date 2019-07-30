@@ -1,20 +1,21 @@
 package com.cengels.progressor.units;
 
+import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import com.cengels.progressor.enums.ProgressType;
 
 import java.io.Serializable;
-import java.util.Locale;
 import java.util.Objects;
 
 public class UnitValue implements Serializable {
+    public static final int SECS_PER_MINUTE = 60;
     private double value;
     @NonNull
     private final ProgressType type;
     private int decimals = -1;
     private String unit;
 
-    public UnitValue(@NonNull ProgressType type) {
+    public UnitValue(@NonNull final ProgressType type) {
         this.type = type;
         this.unit = Unit.getSmallestUnit(this.type);
 
@@ -25,42 +26,42 @@ public class UnitValue implements Serializable {
         this.inferDecimals();
     }
 
-    public UnitValue(double value, @NonNull ProgressType type) {
+    public UnitValue(final double value, @NonNull final ProgressType type) {
         this(type);
         this.value = value;
     }
 
-    public UnitValue(@NonNull String unit, int decimals) {
+    public UnitValue(@NonNull final String unit, final int decimals) {
         this.type = Unit.getProgressType(unit);
         this.unit = unit;
         this.decimals = decimals;
     }
 
-    public UnitValue(double value, @NonNull String unit) {
+    public UnitValue(final double value, @NonNull final String unit) {
         this(unit, 2);
         this.value = value;
 
         this.inferDecimals();
     }
 
-    public UnitValue(int value, @NonNull String unit) {
+    public UnitValue(final int value, @NonNull final String unit) {
         this(unit, 0);
         this.value = value;
 
         this.inferDecimals();
     }
 
-    public UnitValue(double value, @NonNull String unit, int decimals) {
+    public UnitValue(final double value, @NonNull final String unit, final int decimals) {
         this(unit, decimals);
         this.value = value;
     }
 
-    public UnitValue(int value, @NonNull String unit, int decimals) {
+    public UnitValue(final int value, @NonNull final String unit, final int decimals) {
         this(unit, decimals);
         this.value = value;
     }
 
-    public void set(double value) {
+    public void set(final double value) {
         this.value = value;
     }
 
@@ -112,6 +113,7 @@ public class UnitValue implements Serializable {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public String getFormattedValue() {
         final UnitValue value = this.getBest();
 
@@ -119,9 +121,9 @@ public class UnitValue implements Serializable {
             case Unit.SECONDS:
                 return String.format("0:%02d", (long)value.get());
             case Unit.MINUTES:
-                return String.format("%d:%02d", (long)value.get(), (long)(value.get() * 60 % 60));
+                return String.format("%d:%02d", (long)value.get(), (long)(value.get() * SECS_PER_MINUTE % SECS_PER_MINUTE));
             case Unit.HOURS:
-                return String.format("%d:%02d:%02d", (long)value.get(), (long)(value.get() * 60 % 60), (long)(value.get() * 60 * 60 % 60));
+                return String.format("%d:%02d:%02d", (long)value.get(), (long)(value.get() * SECS_PER_MINUTE % SECS_PER_MINUTE), (long)(value.get() * SECS_PER_MINUTE * SECS_PER_MINUTE % SECS_PER_MINUTE));
         }
 
         if (value.decimals == 0 || (long)value.get() == value.get()) {
@@ -131,7 +133,7 @@ public class UnitValue implements Serializable {
         return String.format("%." + this.decimals + "f", value.get());
     }
 
-    public String getFormattedValue(@NonNull String unit) {
+    public String getFormattedValue(@NonNull final String unit) {
         final UnitValue value = Convert.from(this).to(unit);
 
         if (this.decimals == 0) {
@@ -155,7 +157,7 @@ public class UnitValue implements Serializable {
         return best.getFormattedValue() + best.getUnit();
     }
 
-    public String toString(@NonNull String unit) {
+    public String toString(@NonNull final String unit) {
         switch (unit) {
             case Unit.SECONDS:
             case Unit.MINUTES:
@@ -167,18 +169,24 @@ public class UnitValue implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
         final UnitValue unitValue = (UnitValue) o;
-        return Double.compare(unitValue.value, value) == 0 &&
-                decimals == unitValue.decimals &&
-                type == unitValue.type &&
-                unit.equals(unitValue.unit);
+        return Double.compare(unitValue.value, this.value) == 0 &&
+                this.decimals == unitValue.decimals &&
+                this.type == unitValue.type &&
+                this.unit.equals(unitValue.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, type, decimals, unit);
+        return Objects.hash(this.value, this.type, this.decimals, this.unit);
     }
 }

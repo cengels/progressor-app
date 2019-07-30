@@ -18,25 +18,25 @@ public class ProgressItem {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
     @NonNull
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
-    public void setLabel(@NonNull String label) {
+    public void setLabel(@NonNull final String label) {
         this.label = label;
     }
 
     @NonNull
     public String getUnitLabel() {
-        return this.getValue().getBestUnit() + " " + label;
+        return this.getValue().getBestUnit() + " " + this.label;
     }
 
     @NonNull
@@ -44,7 +44,7 @@ public class ProgressItem {
         return this.value;
     }
 
-    public void setValue(@NonNull UnitValue value) {
+    public void setValue(@NonNull final UnitValue value) {
         this.value = value;
     }
 
@@ -53,7 +53,7 @@ public class ProgressItem {
         return this.goal;
     }
 
-    public void setGoal(@NonNull UnitValue goal) {
+    public void setGoal(@NonNull final UnitValue goal) {
         this.goal = goal;
     }
 

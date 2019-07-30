@@ -6,26 +6,24 @@ import com.cengels.progressor.ArrayExtensions;
 import com.cengels.progressor.enums.ProgressType;
 import com.cengels.progressor.exceptions.IllegalConversionException;
 
-import java.util.IllegalFormatConversionException;
-
-public class Convert {
+public final class Convert {
     @NonNull
     private final UnitValue value;
     @Nullable
     private String[] units;
-    private boolean checked = false;
+    private boolean checked;
 
-    private Convert(@NonNull UnitValue unitValue) {
+    private Convert(@NonNull final UnitValue unitValue) {
         this.value = unitValue;
     }
 
     @NonNull
-    public static Convert from(double value, @NonNull String fromUnit) {
+    public static Convert from(final double value, @NonNull final String fromUnit) {
         return new Convert(new UnitValue(value, fromUnit));
     }
 
     @NonNull
-    public static Convert from(@NonNull UnitValue unitValue) {
+    public static Convert from(@NonNull final UnitValue unitValue) {
         return new Convert(unitValue);
     }
 
@@ -48,7 +46,7 @@ public class Convert {
         return this.value;
     }
 
-    public UnitValue to(@NonNull String toUnit) {
+    public UnitValue to(@NonNull final String toUnit) {
         if (this.value.getUnit().equals(toUnit)) {
             return this.value;
         }
@@ -59,7 +57,7 @@ public class Convert {
 
         final String[] units = this.getUnits();
 
-        int index = ArrayExtensions.indexOf(units, this.value.getUnit());
+        final int index = ArrayExtensions.indexOf(units, this.value.getUnit());
         final int indexTarget = ArrayExtensions.indexOf(units, toUnit);
 
         if (index == -1 || indexTarget == -1) {
@@ -98,12 +96,12 @@ public class Convert {
             if (value < 1) {
                 value *= Unit.conversionTable.get(units[index - 1]);
                 index--;
-                unit = units[index];
             } else {
                 value /= Unit.conversionTable.get(unit);
                 index++;
-                unit = units[index];
             }
+
+            unit = units[index];
         }
 
         return new UnitValue(value, unit);

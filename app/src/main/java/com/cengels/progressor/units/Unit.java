@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("MagicNumber")
 public abstract class Unit {
     public static final String NONE = "";
     public static final String PERCENT = "%";
@@ -31,7 +32,7 @@ public abstract class Unit {
     public static final String MINUTES = "min";
     public static final String SECONDS = "s";
 
-    public static Map<String, Double> conversionTable = new HashMap<>();
+    public static final Map<String, Double> conversionTable = new HashMap<>();
 
     static {
         conversionTable.put(Unit.KILOGRAMS, 1000.0);
@@ -50,30 +51,30 @@ public abstract class Unit {
     }
 
     @Nullable
-    public static String getSmallestUnit(ProgressType progressType) {
+    public static String getSmallestUnit(final ProgressType progressType) {
         try {
             return Objects.requireNonNull(ProgressType.class.getField(progressType.name()).getAnnotation(UnitDescriptor.class)).value()[0];
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             return null;
         }
     }
 
     @Nullable
-    public static String[] getUnits(ProgressType progressType) {
+    public static String[] getUnits(final ProgressType progressType) {
         try {
             return Objects.requireNonNull(ProgressType.class.getField(progressType.name()).getAnnotation(UnitDescriptor.class)).value();
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             return null;
         }
     }
 
-    public static ProgressType getProgressType(@NonNull String unit) {
-            for (ProgressType value : ProgressType.values()) {
+    public static ProgressType getProgressType(@NonNull final String unit) {
+            for (final ProgressType value : ProgressType.values()) {
                 try {
                     if (ArrayExtensions.contains(Objects.requireNonNull(ProgressType.class.getField(value.name()).getAnnotation(UnitDescriptor.class)).value(), unit)) {
                         return value;
                     }
-                } catch (Exception ignored) { }
+                } catch (final Exception ignored) { }
             }
 
         return ProgressType.CUSTOM;

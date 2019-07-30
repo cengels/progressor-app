@@ -12,10 +12,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.preferences, rootKey);
+    public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
+        this.setPreferencesFromResource(R.xml.preferences, rootKey);
 
-        final Preference feedbackLink = findPreference("feedback");
+        final Preference feedbackLink = this.findPreference("feedback");
         assert feedbackLink != null;
         feedbackLink.setOnPreferenceClickListener(preference -> {
             // TODO: Add feedback link

@@ -18,39 +18,40 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
     private final List<ProgressItem> items;
     private final OnListFragmentInteractionListener listener;
 
-    public ProgressItemRecyclerViewAdapter(List<ProgressItem> items, OnListFragmentInteractionListener listener) {
+    public ProgressItemRecyclerViewAdapter(final List<ProgressItem> items, final OnListFragmentInteractionListener listener) {
+        super();
         this.items = items;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_progress_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = items.get(position);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.item = this.items.get(position);
         holder.valueView.setText(holder.item.getValue().getFormattedValue());
         holder.labelView.setText(holder.item.getUnitLabel());
         holder.progressBar.setProgress(holder.item.getProgress());
         holder.maxValueView.setText(holder.item.getGoal().getFormattedValue(holder.item.getValue().getBestUnit()));
 
         holder.view.setOnClickListener(v -> {
-            if (listener != null) {
+            if (this.listener != null) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.
-                listener.onListFragmentInteraction(holder.item);
+                this.listener.onListFragmentInteraction(holder.item);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return this.items.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +62,7 @@ public class ProgressItemRecyclerViewAdapter extends RecyclerView.Adapter<Progre
         public final TextView maxValueView;
         public ProgressItem item;
 
-        public ViewHolder(View view) {
+        public ViewHolder(final View view) {
             super(view);
             this.view = view;
             this.valueView = view.findViewById(R.id.item_value);

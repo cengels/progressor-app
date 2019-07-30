@@ -9,10 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // useful link: https://codelabs.developers.google.com/codelabs/android-testing/index.html
 
@@ -38,16 +39,16 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("smallerToLargerParameters")
     public void standardConversion_largerUnitShouldReturnSmallerValue(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).to(target.getUnit()).get();
-        double expected = target.get();
+        final double actual = Convert.from(source).to(target.getUnit()).get();
+        final double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
 
     @ParameterizedTest
     @MethodSource("largerToSmallerParameters")
     public void standardConversion_smallerUnitShouldReturnLargerValue(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).to(target.getUnit()).get();
-        double expected = target.get();
+        final double actual = Convert.from(source).to(target.getUnit()).get();
+        final double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
 
@@ -61,8 +62,8 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("bestParametersSmallToLarge")
     public void bestConversion_shouldGetLastUnitValueWithValueOver1(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).best().get();
-        double expected = target.get();
+        final double actual = Convert.from(source).best().get();
+        final double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
 
@@ -76,8 +77,8 @@ public class ConvertTest {
     @ParameterizedTest
     @MethodSource("bestParametersLargeToSmall")
     public void bestConversion_shouldGetFirstUnitValueWithValueOver1(final UnitValue source, final UnitValue target) {
-        double actual = Convert.from(source).best().get();
-        double expected = target.get();
+        final double actual = Convert.from(source).best().get();
+        final double expected = target.get();
         assertEquals(expected, actual, 0.0000005, source.getUnit() + " to " + target.getUnit());
     }
 
