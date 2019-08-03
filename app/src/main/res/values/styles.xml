@@ -20,7 +20,7 @@
 
     <style name="AppTheme.LabelText">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#696969</item>
+        <item name="android:textColor">@color/labelColor</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

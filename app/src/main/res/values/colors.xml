@@ -5,4 +5,5 @@
     <color name="colorAccent">#3949AB</color>
     <color name="progressBarTint">#3F51B5</color>
     <color name="progressBarTintBackground">#8C9EFF</color>
+    <color name="labelColor">#696969</color>
 </resources>
