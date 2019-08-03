@@ -12,6 +12,8 @@ public class ProgressItem {
     private UnitValue value;
     @NonNull
     private UnitValue goal;
+    @NonNull
+    private UnitValue step;
 
     public ProgressType getType() {
         return this.value.getType();
@@ -57,7 +59,16 @@ public class ProgressItem {
         this.goal = goal;
     }
 
-    public int getProgress() {
-        return (int) Math.round(this.value.get() / this.goal.get() * 100);
+    public UnitValue getProgress() {
+        return this.value.divideBy(this.goal).multiply(100);
+    }
+
+    @NonNull
+    public UnitValue getStep() {
+        return this.step;
+    }
+
+    public void setStep(@NonNull final UnitValue step) {
+        this.step = step;
     }
 }

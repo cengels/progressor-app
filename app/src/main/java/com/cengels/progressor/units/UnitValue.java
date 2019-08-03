@@ -7,7 +7,7 @@ import com.cengels.progressor.enums.ProgressType;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UnitValue implements Serializable {
+public class UnitValue implements Serializable, Arithmetic<UnitValue> {
     public static final int SECS_PER_MINUTE = 60;
     private double value;
     @NonNull
@@ -58,10 +58,6 @@ public class UnitValue implements Serializable {
 
     public UnitValue(final int value, @NonNull final String unit, final int decimals) {
         this(unit, decimals);
-        this.value = value;
-    }
-
-    public void set(final double value) {
         this.value = value;
     }
 
@@ -166,6 +162,54 @@ public class UnitValue implements Serializable {
         }
 
         return this.getFormattedValue(unit) + unit;
+    }
+
+    public UnitValue multiply(@NonNull final UnitValue value) {
+        return new UnitValue(this.value * value.value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue divideBy(@NonNull final UnitValue value) {
+        return new UnitValue(this.value / value.value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue add(@NonNull final UnitValue value) {
+        return new UnitValue(this.value + value.value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue subtract(@NonNull final UnitValue value) {
+        return new UnitValue(this.value - value.value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue multiply(final int value) {
+        return new UnitValue(this.value * value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue divideBy(final int value) {
+        return new UnitValue(this.value / value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue add(final int value) {
+        return new UnitValue(this.value + value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue subtract(final int value) {
+        return new UnitValue(this.value - value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue multiply(final double value) {
+        return new UnitValue(this.value * value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue divideBy(final double value) {
+        return new UnitValue(this.value / value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue add(final double value) {
+        return new UnitValue(this.value + value, this.getUnit(), this.decimals);
+    }
+
+    public UnitValue subtract(final double value) {
+        return new UnitValue(this.value - value, this.getUnit(), this.decimals);
     }
 
     @Override
