@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -35,8 +36,8 @@ android {
         androidTest.java.srcDirs = ['src/androidTest/kotlin']
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     testOptions {
         unitTests.all {
@@ -46,6 +47,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        exclude "META-INF/LICENSE*"
+    }
+    
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 // androidx.test has a dependency to JUnit 4 and hamcrest, rendered redundant by JUnit 5 and JAssert.
@@ -72,6 +80,12 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.11.1'
     androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
+    androidTestImplementation 'androidx.test:core:1.2.1-alpha02'
+    androidTestImplementation 'androidx.test:core-ktx:1.2.1-alpha02'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+    androidTestImplementation 'org.assertj:assertj-core:3.11.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0-beta02'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0-beta02'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

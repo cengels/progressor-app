@@ -29,7 +29,7 @@ class ProgressItemRecyclerViewAdapter(
         holder.progressBar.progress = holder.item.progress.get().roundToInt()
         holder.maxValueView.text = holder.item.goal.getFormattedValue(holder.item.value.getBestUnit())
 
-        holder.view.setOnClickListener { v ->
+        holder.view.setOnClickListener { _ ->
             if (this.listener != null) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.

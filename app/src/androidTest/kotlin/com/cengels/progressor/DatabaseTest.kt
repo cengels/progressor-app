@@ -11,9 +11,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.io.IOException
 
 /** Tests the application database. */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DatabaseTest {
     private lateinit var progressItemDao: ProgressItemDao
     private lateinit var progressDao: ProgressDao
