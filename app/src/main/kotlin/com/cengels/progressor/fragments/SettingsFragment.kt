@@ -7,7 +7,7 @@ import com.cengels.progressor.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         this.setPreferencesFromResource(R.xml.preferences, rootKey)
 
         val feedbackLink = this.findPreference<Preference>("feedback")!!

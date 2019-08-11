@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 import java.util.stream.Stream
 
-/** Tests the [DateExtensions] class. */
+/** Tests various date extensions. */
 class DateTest {
     @ParameterizedTest
     @MethodSource("roundingParameters")

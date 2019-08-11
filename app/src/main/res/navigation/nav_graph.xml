@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/progress_item_list">
+            app:startDestination="@id/view_main">
 
     <fragment
-            android:id="@+id/progress_item_list"
+            android:id="@+id/view_main"
             android:name="com.cengels.progressor.fragments.ProgressListFragment"
             android:label="Progressor"/>
     <fragment

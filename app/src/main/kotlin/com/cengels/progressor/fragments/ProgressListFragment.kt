@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cengels.progressor.R
 import com.cengels.progressor.R.layout
 import com.cengels.progressor.models.ProgressItem
 import com.cengels.progressor.viewmodels.ProgressListViewModel
@@ -23,10 +24,9 @@ class ProgressListFragment : Fragment() {
 
         this.viewModel = ViewModelProviders.of(this).get(ProgressListViewModel::class.java)
 
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            view.layoutManager = LinearLayoutManager(context)
-            view.adapter = ProgressItemRecyclerViewAdapter(this.viewModel.progressItems, this.listener)
+        view.findViewById<RecyclerView>(R.id.progress_item_list).let {
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter = ProgressItemRecyclerViewAdapter(this.viewModel.progressItems, this.listener)
         }
 
         return view
