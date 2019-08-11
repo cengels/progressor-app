@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3f6b466d159839e713c46d73d83f48c7",
+    "identityHash": "349c2f6896307631e8ff2d487c74d8ee",
     "entities": [
       {
         "tableName": "progress_items",
@@ -53,11 +53,17 @@
       },
       {
         "tableName": "Progress",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `value` REAL NOT NULL, `progress_item_id` INTEGER NOT NULL, FOREIGN KEY(`id`) REFERENCES `progress_items`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `progress_item_id` INTEGER NOT NULL, `date` INTEGER NOT NULL, `value` REAL NOT NULL, `maximumType` TEXT NOT NULL, `maximumPerPeriod` INTEGER NOT NULL, FOREIGN KEY(`id`) REFERENCES `progress_items`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "progressItemId",
+            "columnName": "progress_item_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -74,8 +80,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "progressItemId",
-            "columnName": "progress_item_id",
+            "fieldPath": "maximumType",
+            "columnName": "maximumType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maximumPerPeriod",
+            "columnName": "maximumPerPeriod",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -105,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3f6b466d159839e713c46d73d83f48c7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '349c2f6896307631e8ff2d487c74d8ee')"
     ]
   }
 }
