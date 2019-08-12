@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cengels.progressor.R
 import com.cengels.progressor.R.layout
+import com.cengels.progressor.extensions.swap
 import com.cengels.progressor.models.ProgressItem
 import com.cengels.progressor.viewmodels.ProgressListViewModel
 
@@ -25,6 +27,7 @@ class ProgressListFragment : Fragment() {
         this.viewModel = ViewModelProviders.of(this).get(ProgressListViewModel::class.java)
 
         view.findViewById<RecyclerView>(R.id.progress_item_list).let {
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(it)
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = ProgressItemRecyclerViewAdapter(this.viewModel.progressItems, this.listener)
         }
@@ -32,6 +35,16 @@ class ProgressListFragment : Fragment() {
         return view
     }
 
+    val itemTouchHelperCallback: ItemTouchHelper.Callback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { }
+
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            viewModel.progressItems.swap(viewHolder.adapterPosition, target.adapterPosition)
+            recyclerView.adapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition) ?: throw IllegalStateException("No adapter found while trying to drag and drop item.")
+            return true
+        }
+
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

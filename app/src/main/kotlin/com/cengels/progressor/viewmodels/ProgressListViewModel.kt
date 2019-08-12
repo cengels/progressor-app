@@ -10,7 +10,7 @@ import java.util.ArrayList
 class ProgressListViewModel : ViewModel() {
     private val _progressItems: MutableList<ProgressItem> = ArrayList()
 
-    val progressItems: List<ProgressItem> = this._progressItems
+    val progressItems: MutableList<ProgressItem> = this._progressItems
 
     init {
         val progressItem1 = ProgressItem()
