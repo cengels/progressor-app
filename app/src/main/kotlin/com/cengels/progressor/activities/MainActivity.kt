@@ -1,12 +1,13 @@
 package com.cengels.progressor.activities
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -45,9 +46,7 @@ class MainActivity : AppCompatActivity(), ProgressListFragment.OnListFragmentInt
         NavigationUI.setupActionBarWithNavController(this, this.navController, this.appBarConfiguration)
 
         this.navController.addOnDestinationChangedListener { _, destination, _ ->
-            val settingsIcon: MenuItem? = toolbar.menu.findItem(R.id.settings_fragment)
-
-            settingsIcon?.isVisible = destination.id == R.id.progress_item_list
+            toolbar.menu.findItem(R.id.action_view_main_to_view_settings)?.isVisible = destination.id == R.id.view_main
         }
     }
 

@@ -7,12 +7,28 @@
     <fragment
             android:id="@+id/view_main"
             android:name="com.cengels.progressor.fragments.ProgressListFragment"
-            android:label="Progressor"/>
+            android:label="Progressor">
+        <action
+                android:id="@+id/action_view_main_to_view_add_progress_item"
+                app:destination="@id/view_add_progress_item"
+                app:enterAnim="@anim/anim_slide_up"
+                app:exitAnim="@anim/anim_fade_out"
+                app:popEnterAnim="@anim/anim_fade_in"
+                app:popExitAnim="@anim/anim_fade_out"/>
+        <action
+                android:id="@+id/action_view_main_to_view_settings"
+                app:destination="@id/view_settings"
+                app:enterAnim="@anim/anim_slide_up"
+                app:exitAnim="@anim/anim_fade_out"
+                app:popEnterAnim="@anim/anim_fade_out"
+                app:popExitAnim="@anim/anim_fade_out"/>
+    </fragment>
     <fragment
-            android:id="@+id/settings_fragment"
+            android:id="@+id/view_add_progress_item"
+            android:name="com.cengels.progressor.fragments.AddProgressItemFragment"
+            android:label="Add progress item"/>
+    <fragment
+            android:id="@+id/view_settings"
             android:name="com.cengels.progressor.fragments.SettingsFragment"
             android:label="Settings"/>
-    <action
-            android:id="@+id/action_global_settingsFragment"
-            app:destination="@id/settings_fragment" />
 </navigation>

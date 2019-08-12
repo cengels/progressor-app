@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.cengels.progressor.R.layout
 import com.cengels.progressor.extensions.swap
 import com.cengels.progressor.models.ProgressItem
 import com.cengels.progressor.viewmodels.ProgressListViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProgressListFragment : Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
@@ -30,6 +33,10 @@ class ProgressListFragment : Fragment() {
             ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(it)
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = ProgressItemRecyclerViewAdapter(this.viewModel.progressItems, this.listener)
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.button_add_item).setOnClickListener { fab ->
+            this.findNavController().navigate(R.id.action_view_main_to_view_add_progress_item)
         }
 
         return view

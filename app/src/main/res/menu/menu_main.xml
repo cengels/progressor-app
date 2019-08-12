@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.cengels.progressor.activities.MainActivity">
     <item
-            android:id="@+id/settings_fragment"
+            android:id="@+id/action_view_main_to_view_settings"
             android:title="@string/action_settings"
             android:icon="@drawable/ic_settings"
             android:orderInCategory="100"
