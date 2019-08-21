@@ -2,30 +2,33 @@ package com.cengels.progressor.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cengels.progressor.R
 import com.cengels.progressor.R.layout
+import com.cengels.progressor.activities.MainActivity
 import com.cengels.progressor.extensions.swap
 import com.cengels.progressor.models.ProgressItem
 import com.cengels.progressor.viewmodels.ProgressListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ProgressListFragment : Fragment() {
+class ProgressListFragment : ActionBarFragment() {
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var viewModel: ProgressListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         val view = inflater.inflate(layout.fragment_progress_list, container, false)
+
+        this.setupActionBar(view, SHOW_SETTINGS_BUTTON)
+
+        (this.activity as MainActivity).supportActionBar!!.title = "test"
 
         this.viewModel = ViewModelProviders.of(this).get(ProgressListViewModel::class.java)
 
@@ -50,7 +53,6 @@ class ProgressListFragment : Fragment() {
             recyclerView.adapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition) ?: throw IllegalStateException("No adapter found while trying to drag and drop item.")
             return true
         }
-
     }
 
     override fun onAttach(context: Context) {

@@ -1,26 +1,27 @@
 package com.cengels.progressor.fragments
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.cengels.progressor.R
 import com.cengels.progressor.viewmodels.AddProgressItemViewModel
 
 
-class AddProgressItemFragment : Fragment() {
+class AddProgressItemFragment : ActionBarFragment() {
 
     companion object {
-        fun newInstance() = AddProgressItemFragment()
+        fun newInstance(): AddProgressItemFragment = AddProgressItemFragment()
     }
 
     private lateinit var viewModel: AddProgressItemViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_progress_item, container, false)
+        return inflater.inflate(R.layout.fragment_add_progress_item, container, false).also {
+            this.setupActionBar(it, SHOW_BACK_BUTTON)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
