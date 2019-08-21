@@ -9,7 +9,7 @@ import com.cengels.progressor.R
 import com.cengels.progressor.viewmodels.AddProgressItemViewModel
 
 
-class AddProgressItemFragment : ActionBarFragment() {
+class AddProgressItemFragment : ActionBarFragment("Add progress item") {
 
     companion object {
         fun newInstance(): AddProgressItemFragment = AddProgressItemFragment()
@@ -19,9 +19,7 @@ class AddProgressItemFragment : ActionBarFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_progress_item, container, false).also {
-            this.setupActionBar(it, SHOW_BACK_BUTTON)
-        }
+        return inflater.inflate(R.layout.fragment_add_progress_item, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

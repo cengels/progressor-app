@@ -1,9 +1,7 @@
 package com.cengels.progressor.fragments
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
+import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.cengels.progressor.R
@@ -11,7 +9,7 @@ import com.cengels.progressor.activities.MainActivity
 import com.cengels.progressor.extensions.includes
 import java.lang.Exception
 
-abstract class ActionBarFragment : Fragment() {
+abstract class ActionBarFragment(val title: String, val options: Int = SHOW_BACK_BUTTON) : Fragment() {
     val mainActivity: MainActivity
             get() = this.activity as MainActivity
 
@@ -23,7 +21,13 @@ abstract class ActionBarFragment : Fragment() {
         this.setHasOptionsMenu(true)
     }
 
-    fun setupActionBar(view: View? = this.view, options: Int = 0): Toolbar {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        this.setupActionBar(view, this.options)
+    }
+
+    private fun setupActionBar(view: View? = this.view, options: Int = 0): Toolbar {
         if (view == null) {
             throw IllegalArgumentException("View is null.")
         }
@@ -37,6 +41,7 @@ abstract class ActionBarFragment : Fragment() {
 
             this.mainActivity.setSupportActionBar(it)
             this.mainActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(options.includes(SHOW_BACK_BUTTON))
+            it.title = this.title
         }!!
     }
 

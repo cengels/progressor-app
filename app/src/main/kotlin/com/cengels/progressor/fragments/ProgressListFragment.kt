@@ -16,7 +16,7 @@ import com.cengels.progressor.models.ProgressItem
 import com.cengels.progressor.viewmodels.ProgressListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ProgressListFragment : ActionBarFragment() {
+class ProgressListFragment : ActionBarFragment("Progressor", ActionBarFragment.SHOW_SETTINGS_BUTTON) {
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var viewModel: ProgressListViewModel
 
@@ -25,10 +25,6 @@ class ProgressListFragment : ActionBarFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val view = inflater.inflate(layout.fragment_progress_list, container, false)
-
-        this.setupActionBar(view, SHOW_SETTINGS_BUTTON)
-
-        (this.activity as MainActivity).supportActionBar!!.title = "test"
 
         this.viewModel = ViewModelProviders.of(this).get(ProgressListViewModel::class.java)
 

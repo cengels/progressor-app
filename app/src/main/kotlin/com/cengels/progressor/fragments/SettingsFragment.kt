@@ -20,6 +20,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         (this.activity as MainActivity).setSupportActionBar(toolbar)
         this.setHasOptionsMenu(true)
         (this.activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.title = "Preferences"
 
         return preferences
     }
