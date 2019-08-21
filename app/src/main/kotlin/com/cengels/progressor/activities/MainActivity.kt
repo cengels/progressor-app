@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(), ProgressListFragment.OnListFragmentInt
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menuInflater.inflate(R.menu.menu_main, menu)
 
+        R.anim.nav_default_enter_anim
+
         return true
     }
 

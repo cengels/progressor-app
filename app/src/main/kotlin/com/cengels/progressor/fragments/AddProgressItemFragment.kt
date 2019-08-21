@@ -24,7 +24,7 @@ class AddProgressItemFragment : ActionBarFragment("Add progress item") {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AddProgressItemViewModel::class.java)
+        this.viewModel = ViewModelProviders.of(this).get(AddProgressItemViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

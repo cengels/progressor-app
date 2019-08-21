@@ -15,14 +15,14 @@
                 app:enterAnim="@anim/anim_slide_up"
                 app:exitAnim="@anim/anim_fade_out"
                 app:popEnterAnim="@anim/anim_fade_in"
-                app:popExitAnim="@anim/anim_fade_out"/>
+                app:popExitAnim="@anim/anim_slide_down"/>
         <action
                 android:id="@+id/action_view_main_to_view_settings"
                 app:destination="@id/view_settings"
                 app:enterAnim="@anim/anim_slide_up"
                 app:exitAnim="@anim/anim_fade_out"
                 app:popEnterAnim="@anim/anim_fade_out"
-                app:popExitAnim="@anim/anim_fade_out"/>
+                app:popExitAnim="@anim/anim_slide_down"/>
     </fragment>
     <fragment
             android:id="@+id/view_add_progress_item"
